@@ -1,0 +1,125 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDViewer</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <!-- Custom CSS for Sidebar -->
+    <style>
+        .sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .sidebar .nav-link {
+            color: #333;
+        }
+        .sidebar .nav-link:hover {
+            background-color: #e9ecef;
+        }
+        .content {
+            padding: 20px;
+        }
+        .sidebar_link {
+            text-decoration: none;
+        }
+        .sidebar_li_step1 {
+            padding-left: 20px;
+        }
+        .dropdown-toggle::after {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <nav id="sidebar" class="sidebar">
+            <div class="p-4">
+                <h1>
+                    <!-- <a href="#" class="logo sidebar_link">Bootstrap Sidebar</a> -->
+                    <a href="{% url 'viewer:index' %}" class="logo sidebar_link">TDViewer</a>
+                </h1>
+
+                <ul class="list-unstyled components mb-5">
+                {% if States %}
+                    {% for key, value States.items %}
+                        <p>main - {{ key }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>list_menu_item is null.</p>
+                {% endif %}
+                </ul>
+                    <!--
+
+                    <li>
+                        <a href="#contents_menu" data-bs-toggle="collapse" class="dropdown-toggle sidebar_link">Contents</a>
+                        <ul class="collapse list-unstyled" id="contents_menu">
+                            <li><a href="#" class="sidebar_link sidebar_li_step1" data-target="a.html">Home 0</a></li>
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">Home 1</a></li>
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">Home 2</a></li>
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">Home 3</a></li>
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="#manual_menu" data-bs-toggle="collapse" class="dropdown-toggle sidebar_link">Manual</a>
+                        <ul class="collapse list-unstyled" id="manual_menu">
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">Contact 1</a></li>
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">Contact 2</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#resource_menu" data-bs-toggle="collapse" class="dropdown-toggle sidebar_link">Resource</a>
+                        <ul class="collapse list-unstyled" id="resource_menu">
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">About 1</a></li>
+                            <li><a href="#" class="sidebar_link sidebar_li_step1">About 2</a></li>
+                        </ul>
+                    </li>
+                    -->
+            </div>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="sidebar_content" class="sidebar_content">
+
+            {% block page_content %}
+
+            {% endblock page_content %}
+
+        </div>
+    </div>
+
+    <!-- Bootstrap JS  -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Custom JS for handling submenu collapse  -->
+    <script>
+        var myCollapseEl = document.getElementById('sidebar')
+        myCollapseEl.addEventListener('show.bs.collapse', function (e) {
+            var activeElement = myCollapseEl.querySelector('.collapse.show');
+            if (activeElement && activeElement !== e.target) {
+                var bsCollapse = new bootstrap.Collapse(activeElement, {
+                    toggle: false
+                });
+                bsCollapse.hide();
+            }
+        });
+    </script>
+
+    <!-- Custom JS for handling submenu collapse and loading content
+    <script>
+        $(document).ready(function(){
+            $('#contents_menu a').click(function(e) {
+                e.preventDefault();
+                var page = $(this).data('target');
+                $('#sidebar_content').load(page);
+            });
+        });
+    </script>
+     -->
+</body>
+</html>
